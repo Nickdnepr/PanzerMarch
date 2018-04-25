@@ -12,6 +12,15 @@ public class BodyMaker {
         return createBox(world, x, y, size, size);
     }
 
+    public static Body createEmptyBody(World world, float x, float y){
+        Body body;
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(x, y);
+        body = world.createBody(bodyDef);
+        return body;
+    }
+
     public static Body createBox(World world, float x, float y, float width, float height) {
         Body body;
         BodyDef bodyDef = new BodyDef();

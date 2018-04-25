@@ -120,7 +120,6 @@ public class TestBox2DScreen extends AbstractScreen {
         System.out.println(CAMERA_HEIGHT);
         camera = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
         camera.position.set(new Vector2(CAMERA_WIDTH / 2.0f, CAMERA_HEIGHT / 2.0f), 0);
-//        camera.position.set(new Vector2(10, 10), 0);
     }
 
     private void createBody(Body body) {

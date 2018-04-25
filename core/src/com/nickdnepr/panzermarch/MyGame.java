@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nickdnepr.panzermarch.screens.MenuScreen;
 import com.nickdnepr.panzermarch.screens.TestBox2DScreen;
+import com.nickdnepr.panzermarch.screens.TestLevelScreen;
 
 public class MyGame extends Game {
 
@@ -17,7 +18,7 @@ public class MyGame extends Game {
 
     @Override
     public void create() {
-        setScreen(new TestBox2DScreen(this));
+        setScreen(new TestLevelScreen(this));
     }
 
 }

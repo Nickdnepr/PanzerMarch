@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.joints.*;
 
 public class JointsMaker {
 
-    public static RopeJoint makeRopeJoint(World world, Body bodyA, Body bodyB, float length){
+    public static RopeJoint makeRopeJoint(World world, Body bodyA, Body bodyB, float length) {
         RopeJointDef jointDef = new RopeJointDef();
         jointDef.bodyA = bodyA;
         jointDef.bodyB = bodyB;
@@ -35,8 +35,8 @@ public class JointsMaker {
         jointDef.bodyB = bodyB;
         jointDef.localAnchorA.set(localAnchorBodyA);
         jointDef.localAnchorB.set(0, 0);
-        jointDef.localAxisA.set(Vector2.Y);
-        jointDef.maxMotorTorque = 1000;
+        jointDef.localAxisA.set(new Vector2(0, 1));
+        jointDef.maxMotorTorque = 30;
         return (WheelJoint) world.createJoint(jointDef);
     }
 

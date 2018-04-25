@@ -28,7 +28,7 @@ public class SquareActor extends Actor {
                 super.clicked(event, x, y);
 //                body.applyLinearImpulse(random.nextInt(500000), random.nextInt(500000), 0, 0, true);
 //                body.applyLinearImpulse(0, 500000, getX()+50, getY()+50, true);
-                body.setLinearVelocity(10000000,10000000);
+                body.setLinearVelocity(100,100);
                 System.out.println("clicked");
             }
         });

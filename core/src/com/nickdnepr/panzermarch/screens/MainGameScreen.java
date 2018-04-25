@@ -32,7 +32,7 @@ public class MainGameScreen extends AbstractScreen {
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera));
-        mainHero = new MainHero();
+        //mainHero = new MainHero();
         mainHero.setPosition(0, 0);
         stage.addActor(mainHero);
         random = new Random();

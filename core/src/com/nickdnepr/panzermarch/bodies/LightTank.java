@@ -29,6 +29,7 @@ public class LightTank extends Tank {
     private RevoluteJoint barrelFixer;
     private AimPoint aimPoint;
 
+    //TODO make constants for tank creation
 
     public LightTank(String type, String model, Body base, Body wheel1, Body wheel2, Body wheel3, Body wheel4, WheelJoint wheel1Joint, WheelJoint wheel2Joint, WheelJoint wheel3Joint, WheelJoint wheel4Joint, Body barrel, RevoluteJoint barrelFixer) {
         super(type, model);
@@ -83,10 +84,9 @@ public class LightTank extends Tank {
         wheel4Joint.setMotorSpeed(0);
     }
 
-    //TODO fix bullet trajectory
     @Override
     public void shoot() {
-        Body bullet = BodyMaker.makeCircle(base.getWorld(), barrel.getPosition().x + 2, (float) (barrel.getPosition().y + barrel.getPosition().y * Math.sin(barrel.getAngle())), 0.5f);
+        Body bullet = BodyMaker.makeCircle(base.getWorld(), (float) (barrel.getPosition().x + 2 * Math.cos(barrel.getAngle())), (float) (barrel.getPosition().y + 2 * Math.sin(barrel.getAngle())), 0.5f);
         float speed = 20;
         bullet.setLinearVelocity(new Vector2((float) (speed * Math.cos(barrel.getAngle())), (float) (speed * Math.sin(barrel.getAngle()))));
         bullet.getFixtureList().get(0).setUserData(new Bullet(ObjectTypes.BULLET, 15));
@@ -124,7 +124,7 @@ public class LightTank extends Tank {
 
     //TODO remake aim calculation
     private void setBarrelPosition() {
-        float angle = (float) (Math.atan((aimPoint.getY() - barrel.getPosition().y) / (aimPoint.getX() - barrel.getPosition().x)) * MathUtils.radiansToDegrees)+base.getAngle();
+        float angle = (float) (Math.atan((aimPoint.getY() - barrel.getPosition().y) / (aimPoint.getX() - barrel.getPosition().x)) * MathUtils.radiansToDegrees) + base.getAngle();
         if (angle < -15) {
             angle = -15;
         }

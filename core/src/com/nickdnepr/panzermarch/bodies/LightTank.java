@@ -1,11 +1,20 @@
 package com.nickdnepr.panzermarch.bodies;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.WheelJoint;
+import com.nickdnepr.panzermarch.mechanics.AimPoint;
+import com.nickdnepr.panzermarch.mechanics.Bullet;
+import com.nickdnepr.panzermarch.utils.constants.ObjectTypes;
+import com.nickdnepr.panzermarch.utils.factories.BodyMaker;
 
 public class LightTank extends Tank {
+    public static final int MOTOR_SPEED = 70;
 
     private Body base;
     private Body wheel1;
@@ -16,9 +25,12 @@ public class LightTank extends Tank {
     private WheelJoint wheel2Joint;
     private WheelJoint wheel3Joint;
     private WheelJoint wheel4Joint;
+    private Body barrel;
+    private RevoluteJoint barrelFixer;
+    private AimPoint aimPoint;
 
 
-    public LightTank(String type, String model, Body base, Body wheel1, Body wheel2, Body wheel3, Body wheel4, WheelJoint wheel1Joint, WheelJoint wheel2Joint, WheelJoint wheel3Joint, WheelJoint wheel4Joint) {
+    public LightTank(String type, String model, Body base, Body wheel1, Body wheel2, Body wheel3, Body wheel4, WheelJoint wheel1Joint, WheelJoint wheel2Joint, WheelJoint wheel3Joint, WheelJoint wheel4Joint, Body barrel, RevoluteJoint barrelFixer) {
         super(type, model);
         this.base = base;
         this.wheel1 = wheel1;
@@ -29,30 +41,34 @@ public class LightTank extends Tank {
         this.wheel2Joint = wheel2Joint;
         this.wheel3Joint = wheel3Joint;
         this.wheel4Joint = wheel4Joint;
+        this.barrel = barrel;
+        this.barrelFixer = barrelFixer;
+        System.out.println("Local Axis " + wheel1Joint.getLocalAxisA());
+        aimPoint = new AimPoint(100, 0);
     }
 
     @Override
     public void driveForward() {
         wheel1Joint.enableMotor(true);
-        wheel1Joint.setMotorSpeed(50);
+        wheel1Joint.setMotorSpeed(MOTOR_SPEED);
         wheel2Joint.enableMotor(true);
-        wheel2Joint.setMotorSpeed(50);
+        wheel2Joint.setMotorSpeed(MOTOR_SPEED);
         wheel3Joint.enableMotor(true);
-        wheel3Joint.setMotorSpeed(50);
+        wheel3Joint.setMotorSpeed(MOTOR_SPEED);
         wheel4Joint.enableMotor(true);
-        wheel4Joint.setMotorSpeed(50);
+        wheel4Joint.setMotorSpeed(MOTOR_SPEED);
     }
 
     @Override
     public void driveBack() {
         wheel1Joint.enableMotor(true);
-        wheel1Joint.setMotorSpeed(-50);
+        wheel1Joint.setMotorSpeed(-MOTOR_SPEED);
         wheel2Joint.enableMotor(true);
-        wheel2Joint.setMotorSpeed(-50);
+        wheel2Joint.setMotorSpeed(-MOTOR_SPEED);
         wheel3Joint.enableMotor(true);
-        wheel3Joint.setMotorSpeed(-50);
+        wheel3Joint.setMotorSpeed(-MOTOR_SPEED);
         wheel4Joint.enableMotor(true);
-        wheel4Joint.setMotorSpeed(-50);
+        wheel4Joint.setMotorSpeed(-MOTOR_SPEED);
     }
 
     @Override
@@ -67,6 +83,30 @@ public class LightTank extends Tank {
         wheel4Joint.setMotorSpeed(0);
     }
 
+    //TODO fix bullet trajectory
+    @Override
+    public void shoot() {
+        Body bullet = BodyMaker.makeCircle(base.getWorld(), barrel.getPosition().x + 2, (float) (barrel.getPosition().y + barrel.getPosition().y * Math.sin(barrel.getAngle())), 0.5f);
+        float speed = 20;
+        bullet.setLinearVelocity(new Vector2((float) (speed * Math.cos(barrel.getAngle())), (float) (speed * Math.sin(barrel.getAngle()))));
+        bullet.getFixtureList().get(0).setUserData(new Bullet(ObjectTypes.BULLET, 15));
+        bullet.getFixtureList().get(0).setSensor(true);
+        bullet.setBullet(true);
+    }
+
+    @Override
+    public void aimTo(AimPoint aimPoint) {
+        this.aimPoint = aimPoint;
+        recalculateAim();
+    }
+
+    @Override
+    public void recalculateAim() {
+        setBarrelPosition();
+    }
+
+    //TODO FIX WHEELS
+
     @Override
     public float getX() {
         return base.getPosition().x;
@@ -76,4 +116,24 @@ public class LightTank extends Tank {
     public float getY() {
         return base.getPosition().y;
     }
+
+    @Override
+    public float getAngle() {
+        return base.getAngle();
+    }
+
+    //TODO remake aim calculation
+    private void setBarrelPosition() {
+        float angle = (float) (Math.atan((aimPoint.getY() - barrel.getPosition().y) / (aimPoint.getX() - barrel.getPosition().x)) * MathUtils.radiansToDegrees)+base.getAngle();
+        if (angle < -15) {
+            angle = -15;
+        }
+        if (angle > 15) {
+            angle = 15;
+        }
+
+        barrelFixer.setLimits(angle * MathUtils.degreesToRadians, angle * MathUtils.degreesToRadians);
+
+    }
+
 }

@@ -34,9 +34,11 @@ public class JointsMaker {
         jointDef.bodyA = bodyA;
         jointDef.bodyB = bodyB;
         jointDef.localAnchorA.set(localAnchorBodyA);
-        jointDef.localAnchorB.set(0, 0);
-        jointDef.localAxisA.set(new Vector2(0, 1));
-        jointDef.maxMotorTorque = 30;
+        jointDef.frequencyHz = 3;
+        //jointDef.dampingRatio = 1;
+         jointDef.localAxisA.set(new Vector2(0, 1));
+        //jointDef.localAxisA.set(Vector2.Y);
+        jointDef.maxMotorTorque = 40;
         return (WheelJoint) world.createJoint(jointDef);
     }
 
@@ -44,6 +46,7 @@ public class JointsMaker {
         RevoluteJointDef jointDef = new RevoluteJointDef();
         jointDef.bodyA = bodyA;
         jointDef.bodyB = bodyB;
+
         jointDef.enableLimit = true;
         jointDef.localAnchorA.set(localAnchorBodyA);
         jointDef.localAnchorB.set(localAnchorBodyB);

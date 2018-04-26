@@ -54,7 +54,7 @@ public class BodyMaker {
         return body;
     }
 
-    public static Body makeRilief(World world, float width, float height) {
+    public static Body makeTestRelief(World world, float width, float height) {
         Body body;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -62,7 +62,7 @@ public class BodyMaker {
         body = world.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
         ChainShape chainShape = new ChainShape();
-        chainShape.createChain(new Vector2[]{new Vector2(5, 5), new Vector2(25, 75), new Vector2(500, 60), new Vector2(750, 150)});
+        chainShape.createChain(new Vector2[]{new Vector2(5, 1), new Vector2(10, 3), new Vector2(15, 5), new Vector2(20, 8), new Vector2(25,6), new Vector2(30,3), new Vector2(35,3), new Vector2(40,2), new Vector2(45,1)});
         fixtureDef.shape = chainShape;
         fixtureDef.density = 5;
         fixtureDef.restitution = 0;

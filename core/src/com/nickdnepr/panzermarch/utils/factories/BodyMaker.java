@@ -1,10 +1,13 @@
 package com.nickdnepr.panzermarch.utils.factories;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.nickdnepr.panzermarch.mechanics.Item;
 import com.nickdnepr.panzermarch.utils.constants.ObjectTypes;
+
+import java.util.Arrays;
 
 public class BodyMaker {
 
@@ -54,7 +57,7 @@ public class BodyMaker {
         return body;
     }
 
-    public static Body makeTestRelief(World world, float width, float height) {
+    public static Body makeTestRelief(World world, int width, int minHeight, int maxHeight) {
         Body body;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -62,7 +65,22 @@ public class BodyMaker {
         body = world.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
         ChainShape chainShape = new ChainShape();
-        chainShape.createChain(new Vector2[]{new Vector2(5, 1), new Vector2(10, 3), new Vector2(15, 5), new Vector2(20, 8), new Vector2(25, 6), new Vector2(30, 3), new Vector2(35, 3), new Vector2(40, 2), new Vector2(45, 1)});
+        Vector2[] arr = new Vector2[width/5];
+        int lastHeight = 1;
+        for (int i = 0; i < width/5; i++) {
+            int height = lastHeight+MathUtils.random(-2,2);
+            if (height<minHeight){
+                height=minHeight;
+            }
+            if (height>maxHeight){
+                height=maxHeight;
+            }
+            arr[i] = new Vector2(i*5, height);
+            lastHeight=height;
+        }
+        System.out.println(Arrays.toString(arr));
+        chainShape.createChain(arr);
+        //chainShape.createChain(new Vector2[]{new Vector2(5, 1), new Vector2(10, 3), new Vector2(15, 5), new Vector2(20, 8), new Vector2(25, 6), new Vector2(30, 3), new Vector2(35, 3), new Vector2(40, 2), new Vector2(45, 1)});
         fixtureDef.shape = chainShape;
         fixtureDef.density = 5;
         fixtureDef.friction = 0.7f;

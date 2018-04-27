@@ -42,11 +42,14 @@ public class TestLevelScreen extends AbstractScreen {
         world = new World(new Vector2(0, -10), true);
         initCamera();
         renderer = new Box2DDebugRenderer();
+
+        int width = 5000;
+
         stage = new Stage(new FitViewport(camera.viewportWidth, camera.viewportHeight, camera));
-        BodyMaker.makeWalls(world, camera.viewportWidth, camera.viewportHeight);
+        BodyMaker.makeWalls(world, width, camera.viewportHeight);
         System.out.println(camera.viewportWidth + " " + camera.viewportHeight);
-        BodyMaker.makeTestRelief(world, 0, 0);
-        mainHero = new MainHero(TankMaker.makeTank(TankTypes.LIGHT_TANK, TankTypes.TankModels.TEST_LIGHT_TANK, world, 8, 5));
+        BodyMaker.makeTestRelief(world, width, 1, 10);
+        mainHero = new MainHero(TankMaker.makeTank(TankTypes.LIGHT_TANK, TankTypes.TankModels.TEST_LIGHT_TANK, world, 8, 15));
         stage.addActor(mainHero);
         Gdx.input.setInputProcessor(new InputMultiplexer(stage, new UIController(camera, mainHero)));
         world.setContactListener(new MContactListener(world));
@@ -118,7 +121,7 @@ public class TestLevelScreen extends AbstractScreen {
     }
 
     private void initCamera() {
-        float CAMERA_WIDTH = 60;
+        float CAMERA_WIDTH = 100;
         float CAMERA_HEIGHT = CAMERA_WIDTH * ((float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
         System.out.println(CAMERA_HEIGHT);
         camera = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);

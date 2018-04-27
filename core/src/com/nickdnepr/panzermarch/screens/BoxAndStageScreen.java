@@ -34,7 +34,7 @@ public class BoxAndStageScreen extends AbstractScreen {
         stage.addActor(actor);
         BodyMaker.makeWalls(world, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.setDebugAll(true);
-        BodyMaker.makeTestRelief(world, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        BodyMaker.makeTestRelief(world, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0);
         Gdx.input.setInputProcessor(stage);
 
     }

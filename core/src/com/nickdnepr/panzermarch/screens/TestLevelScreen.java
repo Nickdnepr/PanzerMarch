@@ -12,10 +12,14 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nickdnepr.panzermarch.MyGame;
 import com.nickdnepr.panzermarch.actors.MainHero;
 import com.nickdnepr.panzermarch.actors.ui.Button;
 import com.nickdnepr.panzermarch.mechanics.Item;
+import com.nickdnepr.panzermarch.utils.config.GameConfig;
+import com.nickdnepr.panzermarch.utils.constants.ButtonTags;
+import com.nickdnepr.panzermarch.utils.constants.TankTypes;
 import com.nickdnepr.panzermarch.utils.factories.BodyMaker;
 import com.nickdnepr.panzermarch.utils.factories.TankMaker;
 import com.nickdnepr.panzermarch.utils.input_controllers.UIController;
@@ -38,27 +42,38 @@ public class TestLevelScreen extends AbstractScreen {
         world = new World(new Vector2(0, -10), true);
         initCamera();
         renderer = new Box2DDebugRenderer();
-        stage = new Stage();
+        stage = new Stage(new FitViewport(camera.viewportWidth, camera.viewportHeight, camera));
         BodyMaker.makeWalls(world, camera.viewportWidth, camera.viewportHeight);
         System.out.println(camera.viewportWidth + " " + camera.viewportHeight);
         BodyMaker.makeTestRelief(world, 0, 0);
-        mainHero = new MainHero(TankMaker.makeTank("", "", world, 8, 5));
+        mainHero = new MainHero(TankMaker.makeTank(TankTypes.LIGHT_TANK, TankTypes.TankModels.TEST_LIGHT_TANK, world, 8, 5));
         stage.addActor(mainHero);
         Gdx.input.setInputProcessor(new InputMultiplexer(stage, new UIController(camera, mainHero)));
         world.setContactListener(new MContactListener(world));
         stage.setDebugAll(true);
-
-        initUI();
+        GameConfig.pixelsPerMeter = Gdx.graphics.getWidth() / camera.viewportWidth;
+        initUI(mainHero);
+        System.out.println(stage.getActors().size);
     }
 
-    private void initUI() {
-        stage.addActor(new Button(new Sprite(new Texture("badlogic.jpg")), "test", camera));
+    private void initUI(MainHero mainHero) {
+        switch (mainHero.getTank().getType()) {
+            case TankTypes.LIGHT_TANK: {
+                stage.addActor(new Button(ButtonTags.DRIVE_LEFT, camera, mainHero));
+                stage.addActor(new Button(ButtonTags.DRIVE_RIGHT, camera, mainHero));
+                stage.addActor(new Button(ButtonTags.SHOOT, camera, mainHero));
+
+            }
+        }
+
+
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 1);
+        camera.position.set(mainHero.getTank().getX(), mainHero.getTank().getY(), 0);
         camera.update();
         stage.act(delta);
         world.step(delta, 20, 20);

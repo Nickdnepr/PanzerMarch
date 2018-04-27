@@ -5,17 +5,17 @@ import com.nickdnepr.panzermarch.mechanics.AimPoint;
 
 public abstract class Tank {
 
-    private String type;
-    private String model;
+    private int type;
+    private int model;
 
-    public Tank(String type, String model) {
+    public Tank(int type, int model) {
         this.type = type;
         this.model = model;
     }
 
-    public abstract void driveForward();
+    public abstract void driveRight();
 
-    public abstract void driveBack();
+    public abstract void driveLeft();
 
     public abstract void stop();
 
@@ -31,11 +31,11 @@ public abstract class Tank {
 
     public abstract float getAngle();
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public String getModel() {
+    public int getModel() {
         return model;
     }
 }

@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.joints.WheelJoint;
 import com.nickdnepr.panzermarch.mechanics.AimPoint;
 import com.nickdnepr.panzermarch.mechanics.Bullet;
 import com.nickdnepr.panzermarch.utils.constants.ObjectTypes;
+import com.nickdnepr.panzermarch.utils.constants.Sizes;
 import com.nickdnepr.panzermarch.utils.factories.BodyMaker;
 
 public class LightTank extends Tank {
@@ -31,7 +32,7 @@ public class LightTank extends Tank {
 
     //TODO make constants for tank creation
 
-    public LightTank(String type, String model, Body base, Body wheel1, Body wheel2, Body wheel3, Body wheel4, WheelJoint wheel1Joint, WheelJoint wheel2Joint, WheelJoint wheel3Joint, WheelJoint wheel4Joint, Body barrel, RevoluteJoint barrelFixer) {
+    public LightTank(int type, int model, Body base, Body wheel1, Body wheel2, Body wheel3, Body wheel4, WheelJoint wheel1Joint, WheelJoint wheel2Joint, WheelJoint wheel3Joint, WheelJoint wheel4Joint, Body barrel, RevoluteJoint barrelFixer) {
         super(type, model);
         this.base = base;
         this.wheel1 = wheel1;
@@ -49,19 +50,7 @@ public class LightTank extends Tank {
     }
 
     @Override
-    public void driveForward() {
-        wheel1Joint.enableMotor(true);
-        wheel1Joint.setMotorSpeed(MOTOR_SPEED);
-        wheel2Joint.enableMotor(true);
-        wheel2Joint.setMotorSpeed(MOTOR_SPEED);
-        wheel3Joint.enableMotor(true);
-        wheel3Joint.setMotorSpeed(MOTOR_SPEED);
-        wheel4Joint.enableMotor(true);
-        wheel4Joint.setMotorSpeed(MOTOR_SPEED);
-    }
-
-    @Override
-    public void driveBack() {
+    public void driveRight() {
         wheel1Joint.enableMotor(true);
         wheel1Joint.setMotorSpeed(-MOTOR_SPEED);
         wheel2Joint.enableMotor(true);
@@ -70,6 +59,18 @@ public class LightTank extends Tank {
         wheel3Joint.setMotorSpeed(-MOTOR_SPEED);
         wheel4Joint.enableMotor(true);
         wheel4Joint.setMotorSpeed(-MOTOR_SPEED);
+    }
+
+    @Override
+    public void driveLeft() {
+        wheel1Joint.enableMotor(true);
+        wheel1Joint.setMotorSpeed(MOTOR_SPEED);
+        wheel2Joint.enableMotor(true);
+        wheel2Joint.setMotorSpeed(MOTOR_SPEED);
+        wheel3Joint.enableMotor(true);
+        wheel3Joint.setMotorSpeed(MOTOR_SPEED);
+        wheel4Joint.enableMotor(true);
+        wheel4Joint.setMotorSpeed(MOTOR_SPEED);
     }
 
     @Override
@@ -82,12 +83,16 @@ public class LightTank extends Tank {
         wheel3Joint.setMotorSpeed(0);
         wheel4Joint.enableMotor(false);
         wheel4Joint.setMotorSpeed(0);
+        wheel1.setAngularVelocity(0);
+        wheel2.setAngularVelocity(0);
+        wheel3.setAngularVelocity(0);
+        wheel4.setAngularVelocity(0);
     }
 
     @Override
     public void shoot() {
-        Body bullet = BodyMaker.makeCircle(base.getWorld(), (float) (barrel.getPosition().x + 2 * Math.cos(barrel.getAngle())), (float) (barrel.getPosition().y + 2 * Math.sin(barrel.getAngle())), 0.5f);
-        float speed = 20;
+        Body bullet = BodyMaker.makeCircle(base.getWorld(), (float) (barrel.getPosition().x + 2 * Math.cos(barrel.getAngle())), (float) (barrel.getPosition().y + 2 * Math.sin(barrel.getAngle())), Sizes.GlobalSizes.BULLET_RADIUS);
+        float speed = 200;
         bullet.setLinearVelocity(new Vector2((float) (speed * Math.cos(barrel.getAngle())), (float) (speed * Math.sin(barrel.getAngle()))));
         bullet.getFixtureList().get(0).setUserData(new Bullet(ObjectTypes.BULLET, 15));
         bullet.getFixtureList().get(0).setSensor(true);

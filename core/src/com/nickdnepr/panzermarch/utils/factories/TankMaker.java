@@ -10,7 +10,7 @@ import com.nickdnepr.panzermarch.bodies.Tank;
 
 public class TankMaker {
 
-    public static Tank makeTank(String type, String model, World world, float x, float y) {
+    public static Tank makeTank(int type, int model, World world, float x, float y) {
         Tank tank;
 
         Body base = BodyMaker.createEmptyBody(world, x, y);

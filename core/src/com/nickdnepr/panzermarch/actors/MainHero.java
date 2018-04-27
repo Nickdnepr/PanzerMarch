@@ -9,9 +9,30 @@ public class MainHero extends Actor {
 
     private Sprite sprite;
     private Tank tank;
+    private boolean drivingLeft;
+    private boolean drivingRight;
 
     public MainHero(Tank tank) {
         this.tank = tank;
+    }
+
+    public void driveLeft() {
+        drivingLeft = true;
+        drivingRight = false;
+    }
+
+    public void driveRight() {
+        drivingLeft = false;
+        drivingRight = true;
+    }
+
+    public void stop() {
+        drivingLeft = false;
+        drivingRight = false;
+    }
+
+    public void shoot(){
+        tank.shoot();
     }
 
     @Override
@@ -21,7 +42,17 @@ public class MainHero extends Actor {
 
     @Override
     public void act(float delta) {
-        //sprite.setPosition(getX(), getY());
+        if (drivingRight) {
+            tank.driveRight();
+        } else {
+            if (drivingLeft) {
+                tank.driveLeft();
+            } else {
+                tank.stop();
+            }
+        }
+
+
         super.act(delta);
     }
 

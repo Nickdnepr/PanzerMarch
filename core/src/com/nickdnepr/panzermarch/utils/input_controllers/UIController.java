@@ -18,13 +18,13 @@ public class UIController extends InputAdapter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        updateHeroAim(screenX,screenY);
+        updateHeroAim(screenX, screenY);
         return super.touchDown(screenX, screenY, pointer, button);
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        updateHeroAim(screenX,screenY);
+        updateHeroAim(screenX, screenY);
         return super.touchDragged(screenX, screenY, pointer);
     }
 
@@ -33,7 +33,7 @@ public class UIController extends InputAdapter {
         return super.touchUp(screenX, screenY, pointer, button);
     }
 
-    private void updateHeroAim(int screenX, int screenY){
+    private void updateHeroAim(int screenX, int screenY) {
         System.out.println("Something pressed");
         Vector3 position = new Vector3(screenX, screenY, 0);
         camera.unproject(position);
@@ -43,7 +43,7 @@ public class UIController extends InputAdapter {
 
     @Override
     public boolean keyUp(int keycode) {
-        hero.getTank().stop();
+        hero.stop();
         return true;
     }
 
@@ -51,14 +51,14 @@ public class UIController extends InputAdapter {
     public boolean keyDown(int keycode) {
         System.out.println("Something pressed");
         if (keycode == Input.Keys.RIGHT) {
-            hero.getTank().driveBack();
+            hero.driveRight();
             System.out.println("Drive back pressed");
         }
         if (keycode == Input.Keys.LEFT) {
-            hero.getTank().driveForward();
+            hero.driveLeft();
             System.out.println("Drive forward pressed");
         }
-        if (keycode== Input.Keys.SPACE){
+        if (keycode == Input.Keys.SPACE) {
             hero.getTank().shoot();
         }
         return true;

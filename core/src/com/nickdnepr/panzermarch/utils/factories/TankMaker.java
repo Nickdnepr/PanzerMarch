@@ -7,6 +7,10 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.WheelJoint;
 import com.nickdnepr.panzermarch.bodies.LightTank;
 import com.nickdnepr.panzermarch.bodies.Tank;
+import com.nickdnepr.panzermarch.mechanics.Armor;
+
+
+import static com.nickdnepr.panzermarch.utils.constants.Sizes.TankSizes.*;
 
 public class TankMaker {
 
@@ -15,15 +19,16 @@ public class TankMaker {
 
         Body base = BodyMaker.createEmptyBody(world, x, y);
         System.out.println(base.getAngle());
-        base.createFixture(FixtureMaker.createBoxFixture(6, 0.2f, new Vector2(0, 1)));
-        base.createFixture(FixtureMaker.createBoxFixture(6, 0.2f, new Vector2(0, -1)));
-        base.createFixture(FixtureMaker.createBoxFixture(2.2f, 0.2f, new Vector2(3.8f, 0.5f), -30));
-        base.createFixture(FixtureMaker.createBoxFixture(2.2f, 0.2f, new Vector2(-3.8f, 0.5f), 30));
-        base.createFixture(FixtureMaker.createBoxFixture(2, 0.2f, new Vector2(3.8f, -0.5f), 30));
-        base.createFixture(FixtureMaker.createBoxFixture(2, 0.2f, new Vector2(-3.8f, -0.5f), -30));
-        base.createFixture(FixtureMaker.createBoxFixture(1.5f, 0.2f, new Vector2(0.5f, 1.6f), 60));
-        base.createFixture(FixtureMaker.createBoxFixture(1.5f, 0.2f, new Vector2(2.5f, 1.6f), -60));
-        base.createFixture(FixtureMaker.createBoxFixture(1, 0.2f, new Vector2(1.5f, 2.2f)));
+        base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.ROOF_AND_BOTTOM_PLATE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(0, 1))).setUserData(new Armor(TestLightTank.ARMOR, 0));
+        base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.ROOF_AND_BOTTOM_PLATE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(0, -1))).setUserData(new Armor(TestLightTank.ARMOR, 0));
+        base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.UPPER_PLATE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(3.8f, 0.5f), -30)).setUserData(new Armor(TestLightTank.ARMOR, -30));
+        base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.UPPER_PLATE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(-3.8f, 0.5f), 30)).setUserData(new Armor(TestLightTank.ARMOR,30));
+        base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.LOWER_PLATE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(3.8f, -0.5f), 30)).setUserData(new Armor(TestLightTank.ARMOR,30));
+        base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.LOWER_PLATE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(-3.8f, -0.5f), -30)).setUserData(new Armor(TestLightTank.ARMOR,-30));
+        base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.TURRET_SIDE_PALE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(0.5f, 1.6f), 60)).setUserData(new Armor(TestLightTank.ARMOR,60));
+        base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.TURRET_SIDE_PALE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(2.5f, 1.6f), -60)).setUserData(new Armor(TestLightTank.ARMOR,-60));
+        base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.TURRET_ROOF_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(1.5f, 2.2f))).setUserData(new Armor(TestLightTank.ARMOR, 0));
+        base.createFixture(FixtureMaker.createBoxFixture(3, 1.2f, new Vector2(-1.5f, 0)));
 
         Body wheel1 = BodyMaker.makeCircle(world, x - 3, y - 1, 0.7f);
         Body wheel2 = BodyMaker.makeCircle(world, x - 1, y + 1, 0.7f);

@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
+import com.nickdnepr.panzermarch.mechanics.Ground;
 import com.nickdnepr.panzermarch.mechanics.Item;
 import com.nickdnepr.panzermarch.utils.constants.ObjectTypes;
 
@@ -53,7 +54,7 @@ public class BodyMaker {
         fixtureDef.density = 2;
         fixtureDef.restitution = 0;
         fixtureDef.friction = 0.8f;
-        body.createFixture(fixtureDef).setUserData(new Item(ObjectTypes.GROUND));
+        body.createFixture(fixtureDef).setUserData(new Ground());
         return body;
     }
 
@@ -85,7 +86,7 @@ public class BodyMaker {
         fixtureDef.density = 5;
         fixtureDef.friction = 0.7f;
         fixtureDef.restitution = 0;
-        body.createFixture(fixtureDef).setUserData(new Item(ObjectTypes.GROUND));
+        body.createFixture(fixtureDef).setUserData(new Ground());
         return body;
     }
 

@@ -36,11 +36,11 @@ public class SimpleCar extends Actor {
         this.world = world;
         this.camera = camera;
         chasis = BodyMaker.createBox(world, x, y, 8, 2);
-        chasis.getFixtureList().get(0).setUserData(new Armor(ObjectTypes.ARMOR, 1000));
-        chasis.createFixture(FixtureMaker.createBoxFixture(0.5f, 0.75f, new Vector2(2, 1.25f))).setUserData(new Armor(ObjectTypes.ARMOR, 10));
-        chasis.createFixture(FixtureMaker.createBoxFixture(0.5f, 0.75f, new Vector2(2, 2.75f))).setUserData(new Armor(ObjectTypes.ARMOR, 10));
-        chasis.createFixture(FixtureMaker.createBoxFixture(0.5f, 2, new Vector2(-2, 2))).setUserData(new Armor(ObjectTypes.ARMOR, 10));
-        chasis.createFixture(FixtureMaker.createBoxFixture(4, 0.5f, new Vector2(0, 3))).setUserData(new Armor(ObjectTypes.ARMOR, 10));
+        chasis.getFixtureList().get(0).setUserData(new Armor(1000, 0));
+        chasis.createFixture(FixtureMaker.createBoxFixture(0.5f, 0.75f, new Vector2(2, 1.25f))).setUserData(new Armor(10, 90));
+        chasis.createFixture(FixtureMaker.createBoxFixture(0.5f, 0.75f, new Vector2(2, 2.75f))).setUserData(new Armor(10, 90));
+        chasis.createFixture(FixtureMaker.createBoxFixture(0.5f, 2, new Vector2(-2, 2), -45)).setUserData(new Armor(10, -45));
+        chasis.createFixture(FixtureMaker.createBoxFixture(4, 0.5f, new Vector2(0, 3))).setUserData(new Armor(10, 0));
 //        turret = BodyMaker.createBox(world, x, y+0.75f, 2.5f, 1.5f);
         leftWheel = BodyMaker.makeCircle(world, x, y, 1);
         rightWheel = BodyMaker.makeCircle(world, x, y, 1);
@@ -74,7 +74,7 @@ public class SimpleCar extends Actor {
         Body bullet = BodyMaker.makeCircle(world, breech.getPosition().x + 4, (float) (breech.getPosition().y + breech.getPosition().y * Math.sin(breech.getAngle())), 0.5f);
         float speed = 200;
         bullet.setLinearVelocity(new Vector2((float) (speed * Math.cos(breech.getAngle())), (float) (speed * Math.sin(breech.getAngle()))));
-        bullet.getFixtureList().get(0).setUserData(new Bullet(ObjectTypes.BULLET, 15));
+        bullet.getFixtureList().get(0).setUserData(new Bullet(15));
         bullet.getFixtureList().get(0).setSensor(true);
         bullet.setBullet(true);
 

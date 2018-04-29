@@ -92,9 +92,9 @@ public class LightTank extends Tank {
     @Override
     public void shoot() {
         Body bullet = BodyMaker.makeCircle(base.getWorld(), (float) (barrel.getPosition().x + 2 * Math.cos(barrel.getAngle())), (float) (barrel.getPosition().y + 2 * Math.sin(barrel.getAngle())), Sizes.GlobalSizes.BULLET_RADIUS);
-        float speed = 200;
+        float speed = 100;
         bullet.setLinearVelocity(new Vector2((float) (speed * Math.cos(barrel.getAngle())), (float) (speed * Math.sin(barrel.getAngle()))));
-        bullet.getFixtureList().get(0).setUserData(new Bullet(ObjectTypes.BULLET, 15));
+        bullet.getFixtureList().get(0).setUserData(new Bullet(15));
         bullet.getFixtureList().get(0).setSensor(true);
         bullet.setBullet(true);
     }

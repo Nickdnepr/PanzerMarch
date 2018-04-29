@@ -35,7 +35,7 @@ public class TestBox2DScreen extends AbstractScreen {
     public void show() {
         initCamera();
         world = new World(new Vector2(0, -10), true);
-        world.setContactListener(new MContactListener(world));
+        world.setContactListener(new MContactListener());
         renderer = new Box2DDebugRenderer();
         walls = BodyMaker.makeWalls(world, camera.viewportWidth, camera.viewportHeight);
 //        body = BodyMaker.createSquare(world, 10, 60, 5);

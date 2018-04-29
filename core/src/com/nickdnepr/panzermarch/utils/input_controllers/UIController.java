@@ -34,10 +34,8 @@ public class UIController extends InputAdapter {
     }
 
     private void updateHeroAim(int screenX, int screenY) {
-        System.out.println("Something pressed");
         Vector3 position = new Vector3(screenX, screenY, 0);
         camera.unproject(position);
-        System.out.println(position.x + " " + position.y);
         hero.getTank().aimTo(new AimPoint(position.x, position.y));
     }
 
@@ -49,14 +47,14 @@ public class UIController extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
-        System.out.println("Something pressed");
+
         if (keycode == Input.Keys.RIGHT) {
             hero.driveRight();
-            System.out.println("Drive back pressed");
+
         }
         if (keycode == Input.Keys.LEFT) {
             hero.driveLeft();
-            System.out.println("Drive forward pressed");
+
         }
         if (keycode == Input.Keys.SPACE) {
             hero.getTank().shoot();

@@ -109,11 +109,11 @@ public class Button extends Actor {
                 break;
             }
             case DRIVE_RIGHT: {
-                setBounds(camera.position.x - camera.viewportWidth / 2 + 7, camera.position.y - camera.viewportHeight / 2 + 1, BUTTON_SIZE, BUTTON_SIZE);
+                setBounds(camera.position.x - camera.viewportWidth / 2 + 13, camera.position.y - camera.viewportHeight / 2 + 1, BUTTON_SIZE, BUTTON_SIZE);
                 break;
             }
             case SHOOT: {
-                setBounds(camera.position.x + camera.viewportWidth / 2 - 7, camera.position.y - camera.viewportHeight / 2 + 1, BUTTON_SIZE, BUTTON_SIZE);
+                setBounds(camera.position.x + camera.viewportWidth / 2 - 13, camera.position.y - camera.viewportHeight / 2 + 1, BUTTON_SIZE, BUTTON_SIZE);
                 break;
             }
         }

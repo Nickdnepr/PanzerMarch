@@ -1,5 +1,7 @@
 package com.nickdnepr.panzermarch.utils.math;
 
+import com.badlogic.gdx.math.MathUtils;
+
 public class AngleUtil {
 
     public static double getAngle(float width, float height) {
@@ -36,8 +38,15 @@ public class AngleUtil {
         if (width > 0 && height < 0) {
 
         }
-
-
         return 0;
+    }
+
+    public static float convertAngle(float angle) {
+        angle = Math.round(angle);
+        angle = angle % 180;
+        if (angle > 90) {
+            angle -= 90;
+        }
+        return angle;
     }
 }

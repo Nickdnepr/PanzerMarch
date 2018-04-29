@@ -4,8 +4,9 @@ public class Bullet extends Item{
 
     private int armorPiercing;
 
-    public Bullet(String type, int armorPiercing) {
-        super(type);
+
+    public Bullet(int armorPiercing) {
+        super(BULLET);
         this.armorPiercing=armorPiercing;
     }
 

@@ -64,10 +64,10 @@ public class TestLevelScreen extends AbstractScreen {
         initUI(mainHero);
         System.out.println(stage.getActors().size);
         Body b = BodyMaker.createEmptyBody(world, 20, 10);
-        b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(0,0),90)).setUserData(new Armor(10,90));
-        b.createFixture(FixtureMaker.createBoxFixture(7,1,new Vector2(5,1),-45)).setUserData(new Armor(10,-45));
-        b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(10,0),-30)).setUserData(new Armor(10,-30));
-        b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(20,0),90)).setUserData(new Armor(10,0));
+        b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(0,0),-90)).setUserData(new Armor(10,90));
+        b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(5,0),90)).setUserData(new Armor(10,-90));
+        b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(10,0),-90)).setUserData(new Armor(10,-90));
+        b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(20,0),-90)).setUserData(new Armor(9,90));
 
         //SimpleCar car = new SimpleCar(world, 20, 10, camera);
         //MainHero test = new MainHero(TankMaker.makeTank(TankTypes.LIGHT_TANK, TankTypes.TankModels.TEST_LIGHT_TANK, world, 30,15));

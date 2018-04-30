@@ -60,13 +60,58 @@ public class MContactListener implements ContactListener {
             Armor armor = (Armor) anotherItem;
             int arm = armor.getArmor();
             int ap = bullet.getArmorPiercing();
+            System.out.println("STARTED COLLISION, BASE AP IS " + ap + " BASE ARM IS " + arm);
             float armAngle = AngleUtil.convertAngle(armor.getAngle() + anotherFixture.getBody().getAngle() * MathUtils.radiansToDegrees);
             //TODO fix possible divideByZero, remake calculation
             float bulletAngle = AngleUtil.convertAngle((float) Math.atan(bulletFixture.getBody().getLinearVelocity().y / Math.abs(bulletFixture.getBody().getLinearVelocity().x)) * MathUtils.radiansToDegrees);
-            float meetingAngle = 180 - Math.abs(armAngle) - bulletAngle;
+            float meetingAngle;
+            if (bulletFixture.getBody().getLinearVelocity().x > 0) {
+                //LEFT COLLIDING
+                System.out.println("LEFT COLLIDING, " + armAngle + " " + bulletAngle);
+                if (armAngle * bulletAngle > 0) {
+                    meetingAngle = Math.abs(armAngle) - Math.abs(bulletAngle);
+                } else {
+                    meetingAngle = 180 - Math.abs(armAngle) - Math.abs(bulletAngle);
+                }
+
+            } else {
+                //RIGHT COLLIDING
+                if (armAngle * bulletAngle < 0) {
+                    meetingAngle = Math.abs(armAngle) - Math.abs(bulletAngle);
+                } else {
+                    meetingAngle = 180 - Math.abs(armAngle) - Math.abs(bulletAngle);
+                }
+            }
+            meetingAngle = AngleUtil.convertAngle(meetingAngle);
+            System.out.println("CONVERTED MEETING ANGLE IS " + meetingAngle + " SIN IS " + Math.sin(meetingAngle * MathUtils.degreesToRadians));
+            arm = (int) Math.round((arm / (Math.sin(meetingAngle * MathUtils.degreesToRadians))));
+
             System.out.println("HIT ANGLE IS " + AngleUtil.convertAngle(meetingAngle));
             System.out.println("BULLET ANGLE IS " + bulletAngle);
+
+            if (ap > arm) {
+                System.out.println("ARMOR PIERCED, ARM IS " + arm);
+                bullet.setArmorPiercing(ap - arm);
+                System.out.println("LEFT AP IS " + bullet.getArmorPiercing());
+            } else {
+
+                //TODO make rikoshets
+                bullet.markAsDead();
+                //if (meetingAngle < 35) {
+                //     System.out.println("RIKOSHET");
+                //bulletFixture.setSensor(false);
+                //} else {
+                //    System.out.println("ARMOR NOT PIERCED");
+
+                // }
+            }
+
+            System.out.println("----------------");
             //System.out.println(bulletFixture.getBody().linVelLoc.y / bulletFixture.getBody().linVelLoc.x+" "+bulletFixture.getBody().getLinearVelocity().y +" "+ bulletFixture.getBody().getLinearVelocity().x);
+
+        }
+
+        if (anotherItem.getType()==Item.MODULE){
 
         }
 

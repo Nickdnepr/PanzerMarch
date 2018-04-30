@@ -45,7 +45,7 @@ public class AngleUtil {
         angle = Math.round(angle);
         angle = angle % 180;
         if (angle > 90) {
-            angle -= 90;
+            angle = 180 - angle;
         }
         return angle;
     }

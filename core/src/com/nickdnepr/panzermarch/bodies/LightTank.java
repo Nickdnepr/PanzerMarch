@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.WheelJoint;
 import com.nickdnepr.panzermarch.mechanics.AimPoint;
 import com.nickdnepr.panzermarch.mechanics.Bullet;
+import com.nickdnepr.panzermarch.mechanics.Module;
 import com.nickdnepr.panzermarch.utils.constants.ObjectTypes;
 import com.nickdnepr.panzermarch.utils.constants.Sizes;
 import com.nickdnepr.panzermarch.utils.factories.BodyMaker;
@@ -29,10 +30,11 @@ public class LightTank extends Tank {
     private Body barrel;
     private RevoluteJoint barrelFixer;
     private AimPoint aimPoint;
+    private Module engine;
 
     //TODO make constants for tank creation
 
-    public LightTank(int type, int model, Body base, Body wheel1, Body wheel2, Body wheel3, Body wheel4, WheelJoint wheel1Joint, WheelJoint wheel2Joint, WheelJoint wheel3Joint, WheelJoint wheel4Joint, Body barrel, RevoluteJoint barrelFixer) {
+    public LightTank(int type, int model, Body base, Body wheel1, Body wheel2, Body wheel3, Body wheel4, WheelJoint wheel1Joint, WheelJoint wheel2Joint, WheelJoint wheel3Joint, WheelJoint wheel4Joint, Body barrel, RevoluteJoint barrelFixer, Module engine) {
         super(type, model);
         this.base = base;
         this.wheel1 = wheel1;
@@ -45,6 +47,7 @@ public class LightTank extends Tank {
         this.wheel4Joint = wheel4Joint;
         this.barrel = barrel;
         this.barrelFixer = barrelFixer;
+        this.engine = engine;
         System.out.println("Local Axis " + wheel1Joint.getLocalAxisA());
         aimPoint = new AimPoint(100, 0);
     }
@@ -94,7 +97,7 @@ public class LightTank extends Tank {
         Body bullet = BodyMaker.makeCircle(base.getWorld(), (float) (barrel.getPosition().x + 2 * Math.cos(barrel.getAngle())), (float) (barrel.getPosition().y + 2 * Math.sin(barrel.getAngle())), Sizes.GlobalSizes.BULLET_RADIUS);
         float speed = 100;
         bullet.setLinearVelocity(new Vector2((float) (speed * Math.cos(barrel.getAngle())), (float) (speed * Math.sin(barrel.getAngle()))));
-        bullet.getFixtureList().get(0).setUserData(new Bullet(15));
+        bullet.getFixtureList().get(0).setUserData(new Bullet(40));
         bullet.getFixtureList().get(0).setSensor(true);
         bullet.setBullet(true);
     }

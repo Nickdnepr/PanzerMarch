@@ -2,9 +2,11 @@ package com.nickdnepr.panzermarch.utils.physics;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
+import com.nickdnepr.panzermarch.bodies.Tank;
 import com.nickdnepr.panzermarch.mechanics.Armor;
 import com.nickdnepr.panzermarch.mechanics.Bullet;
 import com.nickdnepr.panzermarch.mechanics.Item;
+import com.nickdnepr.panzermarch.mechanics.Module;
 import com.nickdnepr.panzermarch.utils.constants.ObjectTypes;
 import com.nickdnepr.panzermarch.utils.math.AngleUtil;
 
@@ -111,8 +113,32 @@ public class MContactListener implements ContactListener {
 
         }
 
-        if (anotherItem.getType()==Item.MODULE){
+        if (anotherItem.getType() == Item.MODULE) {
+            Module module = (Module) anotherItem;
+            switch (module.getModule()) {
+                case Module.ENGINE: {
+                    if (module.getArmor() < bullet.getArmorPiercing()) {
+                        bullet.setArmorPiercing(bullet.getArmorPiercing()-module.getArmor());
+                        module.setHp(module.getHp() - bullet.getArmorPiercing());
+                    }else {
+                        bullet.markAsDead();
+                    }
+                    System.out.println("ENGINE HIT");
+                    System.out.println("HP IS "+module.getHp());
 
+                    if (module.isBurnable()){
+                        int chance = MathUtils.random(0,9);
+                        if (chance<10){
+                            Tank tank = (Tank) anotherFixture.getBody().getUserData();
+                            System.out.println("Tank is "+tank);
+                            tank.startFire();
+                            System.out.println("FIRE");
+                        }
+                    }
+                    System.out.println("----------------");
+                    break;
+                }
+            }
         }
 
     }

@@ -63,14 +63,16 @@ public class TestLevelScreen extends AbstractScreen {
         GameConfig.pixelsPerMeter = Gdx.graphics.getWidth() / camera.viewportWidth;
         initUI(mainHero);
         System.out.println(stage.getActors().size);
-        Body b = BodyMaker.createEmptyBody(world, 20, 10);
-        b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(0,0),-90)).setUserData(new Armor(10,90));
-        b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(5,0),90)).setUserData(new Armor(10,-90));
-        b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(10,0),-90)).setUserData(new Armor(10,-90));
-        b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(20,0),-90)).setUserData(new Armor(9,90));
+        //Body b = BodyMaker.createEmptyBody(world, 20, 10);
+       // b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(0,0),-90)).setUserData(new Armor(10,90));
+        //b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(5,0),90)).setUserData(new Armor(10,-90));
+       // b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(10,0),-90)).setUserData(new Armor(10,-90));
+       // b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(20,0),-90)).setUserData(new Armor(9,90));
 
         //SimpleCar car = new SimpleCar(world, 20, 10, camera);
-        //MainHero test = new MainHero(TankMaker.makeTank(TankTypes.LIGHT_TANK, TankTypes.TankModels.TEST_LIGHT_TANK, world, 30,15));
+        MainHero test = new MainHero(TankMaker.makeTank(TankTypes.LIGHT_TANK, TankTypes.TankModels.TEST_LIGHT_TANK, world, 30,15));
+        stage.addActor(test);
+        System.out.println("Test is "+test.getTank());
     }
 
     private void initUI(MainHero mainHero) {
@@ -93,7 +95,7 @@ public class TestLevelScreen extends AbstractScreen {
         camera.position.set(mainHero.getTank().getX() + 20, mainHero.getTank().getY() + 15, 0);
         camera.update();
         stage.act(delta);
-        world.step(delta, 10, 20);
+        world.step(delta, 10, 30);
         renderer.render(world, camera.combined);
         stage.draw();
         clearWorld();

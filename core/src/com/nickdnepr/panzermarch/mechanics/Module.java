@@ -30,6 +30,10 @@ public class Module extends Armor {
         return module;
     }
 
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
     public int getHp() {
         return hp;
     }

@@ -30,11 +30,13 @@ public class LightTank extends Tank {
     private Body barrel;
     private RevoluteJoint barrelFixer;
     private AimPoint aimPoint;
-    private Module engine;
+    private Fixture engine;
+
+    private boolean burning;
 
     //TODO make constants for tank creation
 
-    public LightTank(int type, int model, Body base, Body wheel1, Body wheel2, Body wheel3, Body wheel4, WheelJoint wheel1Joint, WheelJoint wheel2Joint, WheelJoint wheel3Joint, WheelJoint wheel4Joint, Body barrel, RevoluteJoint barrelFixer, Module engine) {
+    public LightTank(int type, int model, Body base, Body wheel1, Body wheel2, Body wheel3, Body wheel4, WheelJoint wheel1Joint, WheelJoint wheel2Joint, WheelJoint wheel3Joint, WheelJoint wheel4Joint, Body barrel, RevoluteJoint barrelFixer, Fixture engine) {
         super(type, model);
         this.base = base;
         this.wheel1 = wheel1;
@@ -48,8 +50,11 @@ public class LightTank extends Tank {
         this.barrel = barrel;
         this.barrelFixer = barrelFixer;
         this.engine = engine;
+        this.base.setUserData(this);
+        this.barrel.setUserData(this);
         System.out.println("Local Axis " + wheel1Joint.getLocalAxisA());
         aimPoint = new AimPoint(100, 0);
+
     }
 
     @Override
@@ -95,7 +100,7 @@ public class LightTank extends Tank {
     @Override
     public void shoot() {
         Body bullet = BodyMaker.makeCircle(base.getWorld(), (float) (barrel.getPosition().x + 2 * Math.cos(barrel.getAngle())), (float) (barrel.getPosition().y + 2 * Math.sin(barrel.getAngle())), Sizes.GlobalSizes.BULLET_RADIUS);
-        float speed = 100;
+        float speed = 80;
         bullet.setLinearVelocity(new Vector2((float) (speed * Math.cos(barrel.getAngle())), (float) (speed * Math.sin(barrel.getAngle()))));
         bullet.getFixtureList().get(0).setUserData(new Bullet(40));
         bullet.getFixtureList().get(0).setSensor(true);
@@ -111,6 +116,24 @@ public class LightTank extends Tank {
     @Override
     public void recalculateAim() {
         setBarrelPosition();
+    }
+
+    @Override
+    public void startFire() {
+        super.startFire();
+        System.out.println("STARTED FIRE");
+        burn();
+    }
+
+
+    @Override
+    public void burn() {
+        System.out.println("FIRE IN TANK");
+    }
+
+    @Override
+    public void explode() {
+
     }
 
     //TODO FIX WHEELS

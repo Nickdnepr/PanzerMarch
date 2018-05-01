@@ -2,6 +2,7 @@ package com.nickdnepr.panzermarch.utils.factories;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.WheelJoint;
@@ -26,12 +27,13 @@ public class TankMaker {
         base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.UPPER_PLATE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(-3.8f, 0.5f), 30)).setUserData(new Armor(TestLightTank.ARMOR, 30));
         base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.LOWER_PLATE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(3.8f, -0.5f), 30)).setUserData(new Armor(TestLightTank.ARMOR, 30));
         base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.LOWER_PLATE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(-3.8f, -0.5f), -30)).setUserData(new Armor(TestLightTank.ARMOR, -30));
-        base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.TURRET_SIDE_PALE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(0.5f, 1.6f), 60)).setUserData(new Armor(TestLightTank.ARMOR, 60));
-        base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.TURRET_SIDE_PALE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(2.5f, 1.6f), -60)).setUserData(new Armor(TestLightTank.ARMOR, -60));
+        base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.TURRET_SIDE_PALE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(0.5f, 1.6f), 60)).setUserData(new Armor(TestLightTank.ARMOR+10, 60));
+        base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.TURRET_SIDE_PALE_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(2.5f, 1.6f), -60)).setUserData(new Armor(TestLightTank.ARMOR+10, -60));
         base.createFixture(FixtureMaker.createBoxFixture(TestLightTank.TURRET_ROOF_WIDTH, TestLightTank.PLATE_HEIGHT, new Vector2(1.5f, 2.2f))).setUserData(new Armor(TestLightTank.ARMOR, 0));
 
-        Module engine = new Module(Module.ENGINE, 5);
-        base.createFixture(FixtureMaker.createBoxFixture(3, 1.2f, new Vector2(-1.5f, 0))).setUserData(engine);
+
+        Fixture engine = base.createFixture(FixtureMaker.createBoxFixture(3, 1.2f, new Vector2(-1.5f, 0)));
+        engine.setUserData(new Module(Module.ENGINE, 5));
 
         Body wheel1 = BodyMaker.makeCircle(world, x - 3, y - 1, 0.7f);
         Body wheel2 = BodyMaker.makeCircle(world, x - 1, y + 1, 0.7f);

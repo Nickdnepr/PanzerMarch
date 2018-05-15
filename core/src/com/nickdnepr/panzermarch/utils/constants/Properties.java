@@ -19,6 +19,10 @@ public class Sizes {
             public static final int ARMOR = 20;
         }
 
+        public static class Panzer1LightTank{
+
+        }
+
     }
 
 

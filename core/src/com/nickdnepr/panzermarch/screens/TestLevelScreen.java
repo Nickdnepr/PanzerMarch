@@ -55,7 +55,7 @@ public class TestLevelScreen extends AbstractScreen {
         BodyMaker.makeWalls(world, width, camera.viewportHeight);
         System.out.println(camera.viewportWidth + " " + camera.viewportHeight);
         //BodyMaker.makeTestRelief(world, width, 1, 10);
-        mainHero = new MainHero(TankMaker.makeTank(TankTypes.LIGHT_TANK, TankTypes.TankModels.TEST_LIGHT_TANK, world, 8, 15));
+        mainHero = new MainHero(TankMaker.makeTank(TankTypes.LIGHT_TANK, TankTypes.TankModels.TEST_LIGHT_TANK, world, 8, 15, TankMaker.ORIENTATION_LEFT));
         stage.addActor(mainHero);
         Gdx.input.setInputProcessor(new InputMultiplexer(stage, new UIController(camera, mainHero)));
         world.setContactListener(new MContactListener());
@@ -70,9 +70,9 @@ public class TestLevelScreen extends AbstractScreen {
        // b.createFixture(FixtureMaker.createBoxFixture(5,1,new Vector2(20,0),-90)).setUserData(new Armor(9,90));
 
         //SimpleCar car = new SimpleCar(world, 20, 10, camera);
-        MainHero test = new MainHero(TankMaker.makeTank(TankTypes.LIGHT_TANK, TankTypes.TankModels.TEST_LIGHT_TANK, world, 30,15));
+        MainHero test = new MainHero(TankMaker.makeTank(TankTypes.LIGHT_TANK, TankTypes.TankModels.TEST_LIGHT_TANK, world, 30,15, TankMaker.ORIENTATION_RIGHT));
         stage.addActor(test);
-        System.out.println("Test is "+test.getTank());
+        //System.out.println("Test is "+test.getTank());
     }
 
     private void initUI(MainHero mainHero) {
@@ -92,7 +92,7 @@ public class TestLevelScreen extends AbstractScreen {
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 1);
-        camera.position.set(mainHero.getTank().getX() + 20, mainHero.getTank().getY() + 15, 0);
+        camera.position.set(mainHero.getTank().getX() + 20, mainHero.getTank().getY() + 10, 0);
         camera.update();
         stage.act(delta);
         world.step(delta, 10, 30);

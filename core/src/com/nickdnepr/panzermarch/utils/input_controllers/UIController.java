@@ -59,6 +59,10 @@ public class UIController extends InputAdapter {
         if (keycode == Input.Keys.SPACE) {
             hero.getTank().shoot();
         }
+
+        if (keycode==Input.Keys.F1){
+            hero.getTank().startFire();
+        }
         return true;
     }
 

@@ -2,17 +2,14 @@ package com.nickdnepr.panzermarch.bodies;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.WheelJoint;
 import com.nickdnepr.panzermarch.mechanics.AimPoint;
 import com.nickdnepr.panzermarch.mechanics.Bullet;
 import com.nickdnepr.panzermarch.mechanics.Module;
-import com.nickdnepr.panzermarch.utils.constants.ObjectTypes;
-import com.nickdnepr.panzermarch.utils.constants.Sizes;
+import com.nickdnepr.panzermarch.utils.constants.Properties;
 import com.nickdnepr.panzermarch.utils.factories.BodyMaker;
 
 public class LightTank extends Tank {
@@ -30,9 +27,9 @@ public class LightTank extends Tank {
     private Body barrel;
     private RevoluteJoint barrelFixer;
     private AimPoint aimPoint;
-    private Fixture engine;
 
-    private boolean burning;
+    private Fixture engine;
+    private Module eng;
 
     //TODO make constants for tank creation
 
@@ -52,6 +49,7 @@ public class LightTank extends Tank {
         this.engine = engine;
         this.base.setUserData(this);
         this.barrel.setUserData(this);
+        eng = (Module) engine.getUserData();
         System.out.println("Local Axis " + wheel1Joint.getLocalAxisA());
         aimPoint = new AimPoint(100, 0);
 
@@ -59,6 +57,11 @@ public class LightTank extends Tank {
 
     @Override
     public void driveRight() {
+
+        if (eng.getHp()<50){
+            stop();
+            return;
+        }
         wheel1Joint.enableMotor(true);
         wheel1Joint.setMotorSpeed(-MOTOR_SPEED);
         wheel2Joint.enableMotor(true);
@@ -71,6 +74,12 @@ public class LightTank extends Tank {
 
     @Override
     public void driveLeft() {
+
+        if (eng.getHp()<50){
+            stop();
+            return;
+        }
+
         wheel1Joint.enableMotor(true);
         wheel1Joint.setMotorSpeed(MOTOR_SPEED);
         wheel2Joint.enableMotor(true);
@@ -99,12 +108,11 @@ public class LightTank extends Tank {
 
     @Override
     public void shoot() {
-        Body bullet = BodyMaker.makeCircle(base.getWorld(), (float) (barrel.getPosition().x + 2 * Math.cos(barrel.getAngle())), (float) (barrel.getPosition().y + 2 * Math.sin(barrel.getAngle())), Sizes.GlobalSizes.BULLET_RADIUS);
+        Body bullet = BodyMaker.makeCircle(base.getWorld(), (float) (barrel.getPosition().x + 2 * Math.cos(barrel.getAngle())), (float) (barrel.getPosition().y + 2 * Math.sin(barrel.getAngle())), Properties.GlobalSizes.BULLET_RADIUS, true);
         float speed = 80;
         bullet.setLinearVelocity(new Vector2((float) (speed * Math.cos(barrel.getAngle())), (float) (speed * Math.sin(barrel.getAngle()))));
-        bullet.getFixtureList().get(0).setUserData(new Bullet(40));
+        bullet.getFixtureList().get(0).setUserData(new Bullet(21));
         bullet.getFixtureList().get(0).setSensor(true);
-        bullet.setBullet(true);
     }
 
     @Override
@@ -128,7 +136,9 @@ public class LightTank extends Tank {
 
     @Override
     public void burn() {
-        System.out.println("FIRE IN TANK");
+        Module eng = (Module) engine.getUserData();
+        eng.setHp(eng.getHp() - 10);
+        System.out.println("FIRE IN TANK " + eng.getHp());
     }
 
     @Override

@@ -6,13 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nickdnepr.panzermarch.actors.MainHero;
-import com.nickdnepr.panzermarch.utils.config.GameConfig;
 
 import static com.nickdnepr.panzermarch.utils.constants.ButtonTags.*;
-import static com.nickdnepr.panzermarch.utils.constants.Sizes.GlobalSizes.BUTTON_SIZE;
+import static com.nickdnepr.panzermarch.utils.constants.Properties.GlobalSizes.BUTTON_SIZE;
 
 public class Button extends Actor {
 

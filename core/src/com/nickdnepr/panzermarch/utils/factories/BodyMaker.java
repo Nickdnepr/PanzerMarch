@@ -66,18 +66,18 @@ public class BodyMaker {
         body = world.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
         ChainShape chainShape = new ChainShape();
-        Vector2[] arr = new Vector2[width/5];
+        Vector2[] arr = new Vector2[width / 5];
         int lastHeight = 1;
-        for (int i = 0; i < width/5; i++) {
-            int height = lastHeight+MathUtils.random(-2,2);
-            if (height<minHeight){
-                height=minHeight;
+        for (int i = 0; i < width / 5; i++) {
+            int height = lastHeight + MathUtils.random(-2, 2);
+            if (height < minHeight) {
+                height = minHeight;
             }
-            if (height>maxHeight){
-                height=maxHeight;
+            if (height > maxHeight) {
+                height = maxHeight;
             }
-            arr[i] = new Vector2(i*5, height);
-            lastHeight=height;
+            arr[i] = new Vector2(i * 5, height);
+            lastHeight = height;
         }
         System.out.println(Arrays.toString(arr));
         chainShape.createChain(arr);
@@ -90,11 +90,16 @@ public class BodyMaker {
         return body;
     }
 
-    public static Body makeCircle(World world, float x, float y, float radius) {
+    public static Body makeCircle(World world, float x, float y, float radius, boolean bullet) {
         Body body;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(x, y);
+        bodyDef.bullet = bullet;
+        if (bullet) {
+            bodyDef.gravityScale = .5f;
+        }
+
         body = world.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape roundShape = new CircleShape();
@@ -105,8 +110,13 @@ public class BodyMaker {
         fixtureDef.restitution = 0.2f;
         fixtureDef.friction = 3;
 
+
         body.createFixture(fixtureDef);
         return body;
+    }
+
+    public static Body makeCircle(World world, float x, float y, float radius) {
+        return makeCircle(world, x, y, radius, false);
     }
 
 

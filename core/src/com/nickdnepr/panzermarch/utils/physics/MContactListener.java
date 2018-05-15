@@ -82,6 +82,7 @@ public class MContactListener implements ContactListener {
                     meetingAngle = Math.abs(armAngle) - Math.abs(bulletAngle);
                 } else {
                     meetingAngle = 180 - Math.abs(armAngle) - Math.abs(bulletAngle);
+
                 }
             }
             meetingAngle = AngleUtil.convertAngle(meetingAngle);
@@ -130,7 +131,7 @@ public class MContactListener implements ContactListener {
                         int chance = MathUtils.random(0,9);
                         if (chance<10){
                             Tank tank = (Tank) anotherFixture.getBody().getUserData();
-                            System.out.println("Tank is "+tank);
+                            System.out.println("Tank is"+tank);
                             tank.startFire();
                             System.out.println("FIRE");
                         }
